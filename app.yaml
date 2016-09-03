@@ -1,0 +1,29 @@
+application: appusers
+version: master
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /static
+  static_dir: static
+
+- url: /_ah/(mapreduce|queue|warmup).*
+  script: appusers.wsgi.application
+  login: admin
+
+- url: /.*
+  script: appusers.wsgi.application
+
+includes:
+- static.yaml
+
+skip_files:
+- manage.py
+- requirements.txt
+- (.*)\.pyc
+- (.*)\.db
+- (.*)\-info
+- README.md
+- .gitignore
